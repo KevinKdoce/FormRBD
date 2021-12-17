@@ -1,5 +1,6 @@
 //Declaraciones
 var dataRbd = [];
+var dataSend = [];
 var rbd = document.getElementById("wpforms-21561-field_6");
 var form = $("#wpforms-form-21561");
 var rut = document.getElementById("wpforms-21561-field_14");
@@ -13,6 +14,7 @@ var RegEx = /\D*([\d[2-9])(\d{4})(\d{4})\D*/g;
 //Helpers
 rbd.addEventListener("click", () => {
   getRbd();
+  SameRut();
   responseRbd();
 });
 
@@ -76,11 +78,27 @@ form.submit((event) => {
   dv = dv == "K" ? 10 : dv;
   v = dv == 0 ? 11 : dv;
 
+  //Verificación de Rut no repetido
+  const matchRut = dataSend.map((Rut) =>
+    Rut.filter((element) => {
+      if (element.rut == rut.value) {
+        return element;
+      }
+    })
+  );
+  // const matchRut = (dvEsperado) => {
+  //   var matching = dataSend.filter(element => element.rut == dvEsperado);
+  //   return matching.length;
+  // }
+
   if (dvEsperado != dv) {
     alert("¡Rut Inválido!");
+  } else if (matchRut.length >= 1 && matchRut[0] != "") {
+    // console.log(matchRut);
+    alert("El rut ingresado ya registra una solicitud!");
   } else if (inEmail.length <= 0) {
     alert("No se admite el campo Email vacío!");
-  } else if (arrob == 0 || punto == 0){
+  } else if (arrob == 0 || punto == 0) {
     alert("Falta el signo '@' para el correo electrónico o falta el '.' para el dominio");
   } else if (rbd.value.length == 0) {
     alert("Indicar RBD!");
@@ -118,6 +136,19 @@ const getRbd = () => {
   });
 };
 
+//Obtención de Rut registrados en las solicitudes enviadas
+const SameRut = () => {
+  $.ajax({
+    url: "./sameRut.php",
+    type: "GET",
+    success: (response) => {
+      let json = JSON.parse(response);
+      dataSend.push(json);
+    },
+  });
+};
+
+//Obtención de RBD
 const responseRbd = () => {
   rbd.addEventListener("change", ({ target }) => {
     const resultFilter = dataRbd.map((rbd) =>

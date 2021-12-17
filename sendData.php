@@ -11,9 +11,10 @@ $charge = $_POST['wpforms-21561-field_8'];
 $Rbd = $_POST['wpforms-21561-field_6'];
 $college = $_POST['nameCollege'];
 $comuna = $_POST['nameComuna'];
+$dependencia = $_POST['nameDependency'];
 
-$query = "INSERT INTO dataSend (Rut, Nombre, Apellido, Correo, Telefono, Cargo, RBD, Colegio, Comuna) VALUES ('$rut', '$name', '$last_name', '$email', '$phone', '$charge', '$Rbd',
-'$college', '$comuna')";
+$query = "INSERT INTO dataSend (Rut, Nombre, Apellido, Correo, Telefono, Cargo, RBD, Colegio, Comuna, Dependencia) VALUES ('$rut', '$name', '$last_name', '$email', '$phone', '$charge', '$Rbd',
+'$college', '$comuna', '$dependencia')";
 $conexion = connection::connect();
 $response = mysqli_query($conexion, $query);
 

@@ -7,7 +7,7 @@ $conexion = connection::connect();
 $response = mysqli_query($conexion, $query);
 
 $json = array();
-while ($row = mysqli_fetch_array($response)) {
+while ($row = mysqli_fetch_assoc($response)) {
     $json[] = array(
         'id' => $row['id'],
         'rbd' => $row['RBD'],

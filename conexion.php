@@ -6,7 +6,7 @@ class connection
 
         $server = "localhost";
         $user = "root";
-        $pass = "def1992";
+        $pass = "root";
         $bd = "kdoce_rbd";
 
         try {
